@@ -1,0 +1,27 @@
+#!/bin/bash
+set -eo pipefail
+
+if [ -n "$BUILDKITE_PLUGIN_ANNOTATE_BODY" ]; then
+  args+=("$BUILDKITE_PLUGIN_ANNOTATE_BODY")
+fi
+
+if [ -n "$BUILDKITE_PLUGIN_ANNOTATE_CONTEXT" ]; then
+  args+=("--context" "$BUILDKITE_PLUGIN_ANNOTATE_CONTEXT")
+fi
+
+if [ -n "$BUILDKITE_PLUGIN_ANNOTATE_STYLE" ]; then
+  args+=("--style" "$BUILDKITE_PLUGIN_ANNOTATE_STYLE")
+fi
+
+if [ "$BUILDKITE_PLUGIN_ANNOTATE_APPEND" == "true" ]; then
+  args+=("--append")
+fi
+
+(
+  # Enable tracing with $ prefix
+  PS4='$ '
+  set -x
+
+  # Annotate the build
+  buildkite-agent annotate "${args[@]}"
+)
