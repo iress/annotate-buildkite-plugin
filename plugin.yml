@@ -1,0 +1,20 @@
+name: Annotate
+description: Annotates the build
+author: https://github.com/iress
+requirements: []
+configuration:
+  properties:
+    body:
+      type: string
+    context:
+      type: string
+    style:
+      type: string
+      enum:
+        - success
+        - info
+        - warning
+        - error
+    append:
+      type: boolean
+  additionalProperties: false
